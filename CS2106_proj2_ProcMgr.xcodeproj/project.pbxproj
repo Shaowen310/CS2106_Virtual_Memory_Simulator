@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		0332DAB619C6BAC1003D7356 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAB519C6BAC1003D7356 /* main.cpp */; };
 		0332DAB819C6BAC1003D7356 /* CS2106_proj2_ProcMgr.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0332DAB719C6BAC1003D7356 /* CS2106_proj2_ProcMgr.1 */; };
+		0332DACD19C6DD28003D7356 /* CmdUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DACC19C6DD28003D7356 /* CmdUI.cpp */; };
+		0332DACF19C6DD58003D7356 /* CmdMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DACE19C6DD58003D7356 /* CmdMgr.cpp */; };
+		0332DAD119C6DD89003D7356 /* Cmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAD019C6DD89003D7356 /* Cmds.cpp */; };
+		0332DAD419C6DDDF003D7356 /* ProcResMgrExceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAD319C6DDDF003D7356 /* ProcResMgrExceptions.cpp */; };
+		0332DAD719C6DE1E003D7356 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAD619C6DE1E003D7356 /* Runtime.cpp */; };
+		0332DAD919C6DE51003D7356 /* ProcCtrlBlk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAD819C6DE51003D7356 /* ProcCtrlBlk.cpp */; };
+		0332DADB19C6DE85003D7356 /* ResCtrlBlk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DADA19C6DE85003D7356 /* ResCtrlBlk.cpp */; };
+		0332DADD19C6DEA9003D7356 /* ResOccupation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DADC19C6DEA9003D7356 /* ResOccupation.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +36,22 @@
 		0332DAB219C6BAC1003D7356 /* CS2106_proj2_ProcMgr */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CS2106_proj2_ProcMgr; sourceTree = BUILT_PRODUCTS_DIR; };
 		0332DAB519C6BAC1003D7356 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0332DAB719C6BAC1003D7356 /* CS2106_proj2_ProcMgr.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CS2106_proj2_ProcMgr.1; sourceTree = "<group>"; };
+		0332DAC219C6C22E003D7356 /* CmdUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdUI.h; sourceTree = "<group>"; };
+		0332DAC319C6CB76003D7356 /* CmdMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdMgr.h; sourceTree = "<group>"; };
+		0332DAC519C6DB57003D7356 /* Cmds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cmds.h; sourceTree = "<group>"; };
+		0332DAC719C6DBA6003D7356 /* ProcCtrlBlk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcCtrlBlk.h; sourceTree = "<group>"; };
+		0332DAC819C6DC02003D7356 /* ProcResMgrExceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcResMgrExceptions.h; sourceTree = "<group>"; };
+		0332DAC919C6DC62003D7356 /* ResCtrlBlk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResCtrlBlk.h; sourceTree = "<group>"; };
+		0332DACA19C6DC9A003D7356 /* ResOccupation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResOccupation.h; sourceTree = "<group>"; };
+		0332DACB19C6DCBD003D7356 /* Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
+		0332DACC19C6DD28003D7356 /* CmdUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CmdUI.cpp; sourceTree = "<group>"; };
+		0332DACE19C6DD58003D7356 /* CmdMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CmdMgr.cpp; sourceTree = "<group>"; };
+		0332DAD019C6DD89003D7356 /* Cmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cmds.cpp; sourceTree = "<group>"; };
+		0332DAD319C6DDDF003D7356 /* ProcResMgrExceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcResMgrExceptions.cpp; sourceTree = "<group>"; };
+		0332DAD619C6DE1E003D7356 /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runtime.cpp; sourceTree = "<group>"; };
+		0332DAD819C6DE51003D7356 /* ProcCtrlBlk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcCtrlBlk.cpp; sourceTree = "<group>"; };
+		0332DADA19C6DE85003D7356 /* ResCtrlBlk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResCtrlBlk.cpp; sourceTree = "<group>"; };
+		0332DADC19C6DEA9003D7356 /* ResOccupation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResOccupation.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +84,66 @@
 		0332DAB419C6BAC1003D7356 /* CS2106_proj2_ProcMgr */ = {
 			isa = PBXGroup;
 			children = (
+				0332DAC119C6C1E1003D7356 /* Sources */,
+				0332DAC019C6C1BF003D7356 /* Headers */,
 				0332DAB519C6BAC1003D7356 /* main.cpp */,
 				0332DAB719C6BAC1003D7356 /* CS2106_proj2_ProcMgr.1 */,
 			);
 			path = CS2106_proj2_ProcMgr;
+			sourceTree = "<group>";
+		};
+		0332DAC019C6C1BF003D7356 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				0332DAC219C6C22E003D7356 /* CmdUI.h */,
+				0332DAC319C6CB76003D7356 /* CmdMgr.h */,
+				0332DAC519C6DB57003D7356 /* Cmds.h */,
+				0332DAC719C6DBA6003D7356 /* ProcCtrlBlk.h */,
+				0332DAC819C6DC02003D7356 /* ProcResMgrExceptions.h */,
+				0332DAC919C6DC62003D7356 /* ResCtrlBlk.h */,
+				0332DACA19C6DC9A003D7356 /* ResOccupation.h */,
+				0332DACB19C6DCBD003D7356 /* Runtime.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		0332DAC119C6C1E1003D7356 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0332DAD519C6DE0A003D7356 /* Runtime */,
+				0332DAD219C6DDBF003D7356 /* Exceptions */,
+				0332DAC419C6DB10003D7356 /* CommandManager */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		0332DAC419C6DB10003D7356 /* CommandManager */ = {
+			isa = PBXGroup;
+			children = (
+				0332DACC19C6DD28003D7356 /* CmdUI.cpp */,
+				0332DACE19C6DD58003D7356 /* CmdMgr.cpp */,
+				0332DAD019C6DD89003D7356 /* Cmds.cpp */,
+			);
+			name = CommandManager;
+			sourceTree = "<group>";
+		};
+		0332DAD219C6DDBF003D7356 /* Exceptions */ = {
+			isa = PBXGroup;
+			children = (
+				0332DAD319C6DDDF003D7356 /* ProcResMgrExceptions.cpp */,
+			);
+			name = Exceptions;
+			sourceTree = "<group>";
+		};
+		0332DAD519C6DE0A003D7356 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				0332DAD619C6DE1E003D7356 /* Runtime.cpp */,
+				0332DAD819C6DE51003D7356 /* ProcCtrlBlk.cpp */,
+				0332DADA19C6DE85003D7356 /* ResCtrlBlk.cpp */,
+				0332DADC19C6DEA9003D7356 /* ResOccupation.cpp */,
+			);
+			name = Runtime;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -117,7 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0332DAD119C6DD89003D7356 /* Cmds.cpp in Sources */,
+				0332DADD19C6DEA9003D7356 /* ResOccupation.cpp in Sources */,
+				0332DAD419C6DDDF003D7356 /* ProcResMgrExceptions.cpp in Sources */,
+				0332DACD19C6DD28003D7356 /* CmdUI.cpp in Sources */,
 				0332DAB619C6BAC1003D7356 /* main.cpp in Sources */,
+				0332DAD719C6DE1E003D7356 /* Runtime.cpp in Sources */,
+				0332DACF19C6DD58003D7356 /* CmdMgr.cpp in Sources */,
+				0332DAD919C6DE51003D7356 /* ProcCtrlBlk.cpp in Sources */,
+				0332DADB19C6DE85003D7356 /* ResCtrlBlk.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

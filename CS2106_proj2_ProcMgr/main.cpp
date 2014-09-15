@@ -6,13 +6,23 @@
 //  Copyright (c) 2014 Zsw. All rights reserved.
 //
 
-#include <iostream>
+#include "CmdUI.h"
+#include "CmdMgr.h"
 
-int main(int argc, const char * argv[])
-{
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main() {
+	CmdMgr* cmdMgr = new CmdMgr();
+	CmdUI* cmdUI = new CmdUI();
+    
+	cmdMgr->connectCmdUI(cmdUI);
+	cmdUI->conectCmdMgr(cmdMgr);
+    
+	cmdUI->setWillAcceptCommand(true);
+	cmdUI->acceptCmds();
+    
+	delete cmdMgr;
+	cmdMgr = NULL;
+	delete cmdUI;
+	cmdUI = NULL;
+    
+	return 0;
 }
-
