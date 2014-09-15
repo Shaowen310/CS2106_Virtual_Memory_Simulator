@@ -20,9 +20,7 @@ int main() {
 	cmdUI->acceptCmds();
     
 	delete cmdMgr;
-	cmdMgr = NULL;
 	delete cmdUI;
-	cmdUI = NULL;
     
 	return 0;
 }

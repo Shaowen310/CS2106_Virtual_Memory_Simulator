@@ -143,7 +143,7 @@ void ProcCtrlBlk::releaseRes(std::string rID, int numUnits) {
 		for (std::list<ResOccupation>::iterator it = resList.begin(); it != resList.end(); it++) {
 			if (!it->getRID().compare(rID)) {
 				resList.erase(it);
-				return;
+				break;
 			}
 		}
 	}
