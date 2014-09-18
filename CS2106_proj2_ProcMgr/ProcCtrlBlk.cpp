@@ -55,14 +55,14 @@ void ProcCtrlBlk::killProcTree(ProcCtrlBlk* pcbRoot) {
 		delete deletePcb;
 	}
     
+    // delete pointer on statuslist
+	removeFromList(pcbRoot->statusList, pcbRoot->pID);
+    
 	// release resources
     for (std::list<ResOccupation>::iterator itRoc = pcbRoot->resList.begin();
          itRoc != pcbRoot->resList.end(); itRoc++) {
         (*itRoc).getRCB()->release((*itRoc).getNumUnits());
     }
-    
-	// delete pointer on statuslist
-	removeFromList(pcbRoot->statusList, pcbRoot->pID);
 }
 
 bool ProcCtrlBlk::requestRes(std::string rID, int numUnits, ResCtrlBlk* rcb) {
@@ -85,7 +85,7 @@ bool ProcCtrlBlk::requestRes(std::string rID, int numUnits, ResCtrlBlk* rcb) {
 	}
     
 	// determine allocate res or not
-	if (pRoc->getRCB()->hasEnoughFreeUnits(necessaryNumUnits)) {
+	if (pRoc->getRCB()->hasEnoughFreeUnits(numUnits)) {
 		// allocate
 		pRoc->getRCB()->alloc(numUnits);
 		// occupy the res
