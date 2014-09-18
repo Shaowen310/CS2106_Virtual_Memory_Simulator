@@ -30,6 +30,7 @@ void ResCtrlBlk::release(int numUnits) {
             
             // alloc res
             this->alloc(roc->getBlockNum());
+            roc->setNumUnits(roc->getNumUnits() + roc->getBlockNum());
             roc->setBlockNum(0);
             
 			examinePcb->unBlock();

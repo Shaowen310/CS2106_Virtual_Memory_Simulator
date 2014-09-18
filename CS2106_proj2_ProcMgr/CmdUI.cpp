@@ -28,5 +28,5 @@ void CmdUI::acceptCmds() {
 }
 
 void CmdUI::echo(std::string str) {
-	std::cout << str << std::endl;
+	std::cout << str << ' ';
 }
