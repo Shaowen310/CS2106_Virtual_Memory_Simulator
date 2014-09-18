@@ -22,19 +22,6 @@ ResOccupation* ProcCtrlBlk::getRoc(std::string rID) {
 	return NULL;
 }
 
-// release means examine the waiting list put the code to resource control block
-void ProcCtrlBlk::releaseAllOccupiedRes() {
-	for (std::list<ResOccupation>::iterator itRoc = this->resList.begin(); itRoc != this->resList.end(); itRoc++) {
-		itRoc->getRCB()->release(itRoc->getNumUnits());
-	}
-}
-
-void ProcCtrlBlk::OccupyAllRes() {
-	for (std::list<ResOccupation>::iterator itRoc = this->resList.begin(); itRoc != this->resList.end(); itRoc++) {
-		itRoc->getRCB()->alloc(itRoc->getNumUnits());
-	}
-}
-
 void ProcCtrlBlk::removeFromList(std::list<ProcCtrlBlk*>* list, std::string pID) {
 	for (std::list<ProcCtrlBlk*>::iterator it = list->begin(); it != list->end(); it++) {
 		if (!((*it)->pID).compare(pID)) {
@@ -69,24 +56,21 @@ void ProcCtrlBlk::killProcTree(ProcCtrlBlk* pcbRoot) {
 	}
     
 	// release resources
-	if (pcbRoot->procStatus == ProcStatus::RUNNING ||
-		pcbRoot->procStatus == ProcStatus::READY) {
-		for (std::list<ResOccupation>::iterator itRoc = pcbRoot->resList.begin();
-             itRoc != pcbRoot->resList.end(); itRoc++) {
-			(*itRoc).getRCB()->release((*itRoc).getNumUnits());
-		}
-	}
+    for (std::list<ResOccupation>::iterator itRoc = pcbRoot->resList.begin();
+         itRoc != pcbRoot->resList.end(); itRoc++) {
+        (*itRoc).getRCB()->release((*itRoc).getNumUnits());
+    }
     
 	// delete pointer on statuslist
 	removeFromList(pcbRoot->statusList, pcbRoot->pID);
 }
 
 bool ProcCtrlBlk::requestRes(std::string rID, int numUnits, ResCtrlBlk* rcb) {
-	ResOccupation* pRop = getRoc(rID);
+	ResOccupation* pRoc = getRoc(rID);
 	int necessaryNumUnits = numUnits;
     
-	if (pRop != NULL) {
-		necessaryNumUnits += pRop->getNumUnits();
+	if (pRoc != NULL) {
+		necessaryNumUnits += pRoc->getNumUnits();
 	}
     
 	if (!rcb->hasEnoughUnits(necessaryNumUnits)) {
@@ -94,30 +78,28 @@ bool ProcCtrlBlk::requestRes(std::string rID, int numUnits, ResCtrlBlk* rcb) {
 	}
     
 	// build new resOccupation if necessary
-	if (pRop == NULL) {
+	if (pRoc == NULL) {
 		ResOccupation rop(rID,0,rcb);
 		this->resList.push_back(rop);
-		pRop = &this->resList.back();
+		pRoc = &this->resList.back();
 	}
     
 	// determine allocate res or not
-	if (pRop->getRCB()->hasEnoughFreeUnits(necessaryNumUnits)) {
+	if (pRoc->getRCB()->hasEnoughFreeUnits(necessaryNumUnits)) {
 		// allocate
-		pRop->getRCB()->alloc(numUnits);
+		pRoc->getRCB()->alloc(numUnits);
 		// occupy the res
-		pRop->setNumUnits(necessaryNumUnits);
+		pRoc->setNumUnits(necessaryNumUnits);
 		return true;
 	}
 	else {
 		// block
 		this->procStatus = ProcStatus::BLOCKED;
-		// release all already occupied resources
-		releaseAllOccupiedRes();
-		// occupy the res
-		pRop->setNumUnits(necessaryNumUnits);
+		// record the blocked num
+		pRoc->setBlockNum(numUnits);
 		// move from ready list to waiting list
 		this->statusList->pop_front();
-		pRop->getRCB()->getProcWaitingList().push_back(this);
+		pRoc->getRCB()->getProcWaitingList().push_back(this);
 		this->statusList = &(rcb->getProcWaitingList());
 		return false;
 	}
@@ -149,32 +131,14 @@ void ProcCtrlBlk::releaseRes(std::string rID, int numUnits) {
 	}
 }
 
-bool ProcCtrlBlk::unBlock() {
+void ProcCtrlBlk::unBlock() {
 	// assume not blocked by other resources
 	this->procStatus = ProcStatus::READY;
     
-	// examine whether other resources are blocked
-	for (std::list<ResOccupation>::iterator itRoc = this->resList.begin();
-         itRoc != this->resList.end(); itRoc++) {
-		ResCtrlBlk* examineRcb = (*itRoc).getRCB();
-		if (!examineRcb->hasEnoughFreeUnits((*itRoc).getNumUnits())) {
-			// block
-			this->procStatus = ProcStatus::BLOCKED;
-			examineRcb->getProcWaitingList().push_back(this);
-			this->statusList = &(examineRcb->getProcWaitingList());
-			return false;
-		}
-	}
-    
-	if (this->procStatus == ProcStatus::READY) {
-		// really ready
-		// occupy resources and move to ready list
-		OccupyAllRes();
-		readyList->at(this->priority).push_back(this);
-		this->statusList = &(readyList->at(this->priority));
-	}
-    
-	return true;
+    // can only be blocked by single resource
+    // resources occupied and move to ready list
+    readyList->at(this->priority).push_back(this);
+    this->statusList = &(readyList->at(this->priority));
 }
 
 ProcCtrlBlk* ProcCtrlBlk::findPcb(ProcCtrlBlk* pcbRoot, std::string pID) {

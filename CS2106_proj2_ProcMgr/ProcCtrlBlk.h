@@ -47,9 +47,7 @@ private:
     
 	// ready list
 	std::vector<std::list<ProcCtrlBlk*> >* readyList;
-	
-	void releaseAllOccupiedRes();
-	void OccupyAllRes();
+
 	void killProcTree(ProcCtrlBlk* pcbRoot);
 	void removeFromList(std::list<ProcCtrlBlk*>* list, std::string pID);
 public:
@@ -62,7 +60,7 @@ public:
     
 	bool requestRes(std::string rID, int numUnits, ResCtrlBlk* rcb);
 	void releaseRes(std::string rID, int numUnits);
-	bool unBlock();
+	void unBlock();
 	void destroyChild(std::string pID);
 	void timeOut();
     

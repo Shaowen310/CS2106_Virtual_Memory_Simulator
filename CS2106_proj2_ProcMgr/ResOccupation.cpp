@@ -11,5 +11,6 @@
 ResOccupation::ResOccupation(std::string rID, int numUnits, ResCtrlBlk* rcb) {
 	this->rID = rID;
 	this->numUnits = numUnits;
+    this->blockedNum = 0;
 	this->rcb = rcb;
 }

@@ -18,6 +18,7 @@ class ResOccupation{
 private:
 	std::string rID;
 	int numUnits;
+    int blockedNum;
 	ResCtrlBlk* rcb;
 public:
 	ResOccupation(std::string rID, int numUnits, ResCtrlBlk* rcb);
@@ -25,6 +26,9 @@ public:
 	std::string getRID() { return this->rID; }
 	int getNumUnits() { return this->numUnits; }
 	void setNumUnits(int newNumUnits) { this->numUnits = newNumUnits; }
+    bool isBlockedBy() { return this->blockedNum != 0; }
+    int getBlockNum() { return this->blockedNum; }
+    void setBlockNum(int blockedNum) { this->blockedNum = blockedNum; }
 	ResCtrlBlk* getRCB() { return this->rcb; }
 };
 

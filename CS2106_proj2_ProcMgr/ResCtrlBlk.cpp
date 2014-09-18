@@ -23,10 +23,15 @@ void ResCtrlBlk::release(int numUnits) {
 	std::list<ProcCtrlBlk*>::iterator itPcb = this->procWaitingList.begin();
 	for (int i = 0; i < (int)this->procWaitingList.size(); i++) {
 		ResOccupation* roc = (*itPcb)->getRoc(this->rID);
-		if (hasEnoughFreeUnits(roc->getNumUnits())) {
+		if (hasEnoughFreeUnits(roc->getBlockNum())) {
 			itPcb++;
 			ProcCtrlBlk* examinePcb = this->procWaitingList.front();
 			this->procWaitingList.pop_front();
+            
+            // alloc res
+            this->alloc(roc->getBlockNum());
+            roc->setBlockNum(0);
+            
 			examinePcb->unBlock();
 		}
 		// still blocked
