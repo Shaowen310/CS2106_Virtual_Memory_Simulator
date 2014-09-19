@@ -17,6 +17,7 @@
 		0332DAD919C6DE51003D7356 /* ProcCtrlBlk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DAD819C6DE51003D7356 /* ProcCtrlBlk.cpp */; };
 		0332DADB19C6DE85003D7356 /* ResCtrlBlk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DADA19C6DE85003D7356 /* ResCtrlBlk.cpp */; };
 		0332DADD19C6DEA9003D7356 /* ResOccupation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0332DADC19C6DEA9003D7356 /* ResOccupation.cpp */; };
+		0361BB7019CC03C1006D4460 /* CmdReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0361BB6F19CC03C1006D4460 /* CmdReceiver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,8 @@
 		0332DAD819C6DE51003D7356 /* ProcCtrlBlk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcCtrlBlk.cpp; sourceTree = "<group>"; };
 		0332DADA19C6DE85003D7356 /* ResCtrlBlk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResCtrlBlk.cpp; sourceTree = "<group>"; };
 		0332DADC19C6DEA9003D7356 /* ResOccupation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResOccupation.cpp; sourceTree = "<group>"; };
+		0361BB6E19CBFF50006D4460 /* CmdReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdReceiver.h; sourceTree = "<group>"; };
+		0361BB6F19CC03C1006D4460 /* CmdReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CmdReceiver.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,7 @@
 			children = (
 				0332DAC219C6C22E003D7356 /* CmdUI.h */,
 				0332DAC319C6CB76003D7356 /* CmdMgr.h */,
+				0361BB6E19CBFF50006D4460 /* CmdReceiver.h */,
 				0332DAC519C6DB57003D7356 /* Cmds.h */,
 				0332DAC719C6DBA6003D7356 /* ProcCtrlBlk.h */,
 				0332DAC819C6DC02003D7356 /* ProcResMgrExceptions.h */,
@@ -123,6 +127,7 @@
 				0332DACC19C6DD28003D7356 /* CmdUI.cpp */,
 				0332DACE19C6DD58003D7356 /* CmdMgr.cpp */,
 				0332DAD019C6DD89003D7356 /* Cmds.cpp */,
+				0361BB6F19CC03C1006D4460 /* CmdReceiver.cpp */,
 			);
 			name = CommandManager;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				0332DACF19C6DD58003D7356 /* CmdMgr.cpp in Sources */,
 				0332DAD919C6DE51003D7356 /* ProcCtrlBlk.cpp in Sources */,
 				0332DADB19C6DE85003D7356 /* ResCtrlBlk.cpp in Sources */,
+				0361BB7019CC03C1006D4460 /* CmdReceiver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +321,7 @@
 				0332DABD19C6BAC1003D7356 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

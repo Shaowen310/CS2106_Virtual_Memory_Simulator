@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <typeinfo>
 #include "Cmds.h"
 #include "ProcResMgrExceptions.h"
 
@@ -25,7 +26,7 @@ void CmdMgr::execute(std::string cmdText) {
 	}
     catch (std::exception& e) {
         delete cmd;
-        cmdUI->echo("error");
+        cmdUI->echo("error ");
         return;
     }
 //	catch (InvalidCmdTypeException& eCmdType) {
@@ -39,18 +40,17 @@ void CmdMgr::execute(std::string cmdText) {
 //		return;
 //	}
 	
+    if (cmd == NULL) {
+        cmdUI->setWillAcceptCommand(false);
+        return;
+    }
+    
 	try {
 		cmd->execute();
 	}
-    catch (DeleteInitException& eDelInit) {
-		delete cmd;
-		cmdUI->echo("Delete init process, poweroff.");
-		cmdUI->setWillAcceptCommand(false);
-		return;
-	}
     catch (std::exception& e) {
         delete cmd;
-        cmdUI->echo("error");
+        cmdUI->echo("error ");
         return;
     }
 //	catch (ProcIDCollisionException& ePIDCol) {
@@ -81,7 +81,9 @@ void CmdMgr::execute(std::string cmdText) {
 	
 	delete cmd;
     
-	cmdUI->echo(runtime.getRunningProcID());
+    if (cmdRecv.isRuntimeInitialized()) {
+        cmdUI->echo(cmdRecv.getRunningPid() + ' ');
+    }
 }
 
 Command* CmdMgr::createCmd(std::string cmdText) {
@@ -95,32 +97,38 @@ Command* CmdMgr::createCmd(std::string cmdText) {
 		cmdArgs.push_back(buf);
 	}
     
-	if (notInitialized) {
-		if (!cmdType.compare("init")) {
-			notInitialized = false;
-			return new CmdInit(&runtime);
-		}
-		else {
-			throw InvalidCmdTypeException();
-		}
-	}
+    if (!cmdType.compare("quit")) {
+        return NULL;
+    }
     
-	if (!cmdType.compare("cr")) {
-		return new CmdCreateProc(cmdArgs, &runtime);
-	}
-	else if (!cmdType.compare("to")) {
-		return new CmdTimeOut(&runtime);
-	}
-	else if (!cmdType.compare("de")) {
-		return new CmdDeleteProc(cmdArgs, &runtime);
-	}
-	else if (!cmdType.compare("req")) {
-		return new CmdRequestRes(cmdArgs, &runtime);
-	}
-	else if (!cmdType.compare("rel")) {
-		return new CmdReleaseRes(cmdArgs, &runtime);
-	}
-	else {
-		throw InvalidCmdTypeException();
-	}
+    if (cmdRecv.isRuntimeInitialized()) {
+        if (cmdType.empty()) {
+            cmdUI->echo("\n");
+            return new CmdDeleteRuntime(&cmdRecv);
+        }
+        else if (!cmdType.compare("cr")) {
+            return new CmdCreateProc(cmdArgs, &cmdRecv);
+        }
+        else if (!cmdType.compare("to")) {
+            return new CmdTimeOut(&cmdRecv);
+        }
+        else if (!cmdType.compare("de")) {
+            return new CmdDeleteProc(cmdArgs, &cmdRecv);
+        }
+        else if (!cmdType.compare("req")) {
+            return new CmdRequestRes(cmdArgs, &cmdRecv);
+        }
+        else if (!cmdType.compare("rel")) {
+            return new CmdReleaseRes(cmdArgs, &cmdRecv);
+        }
+        else {
+            throw InvalidCmdTypeException();
+        }
+    } else {
+        if (!cmdType.compare("init")) {
+            return new CmdInit(&cmdRecv);
+        } else {
+            throw InvalidCmdTypeException();
+        }
+    }
 }

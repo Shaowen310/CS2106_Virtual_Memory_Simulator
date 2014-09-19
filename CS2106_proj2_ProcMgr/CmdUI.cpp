@@ -21,6 +21,7 @@ void CmdUI::conectCmdMgr(CmdMgr *cmdMgr) {
 }
 
 void CmdUI::acceptCmds() {
+    cmdMgr->execute("init");
 	std::string cmd;
 	while (willAcceptCommand && std::getline(std::cin, cmd)) {
 		cmdMgr->execute(cmd);
@@ -28,5 +29,5 @@ void CmdUI::acceptCmds() {
 }
 
 void CmdUI::echo(std::string str) {
-	std::cout << str << ' ';
+	std::cout << str;
 }

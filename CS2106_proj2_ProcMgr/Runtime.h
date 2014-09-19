@@ -26,9 +26,9 @@ private:
 	ResCtrlBlk* getRcb(std::string rID);
 	void schedule();
 public:
+    Runtime();
 	~Runtime();
 	
-	void initialize();
 	void create(std::string pID, ProcPriority priority);
 	void destroy(std::string pID);
 	void request(std::string rID, int numUnits);

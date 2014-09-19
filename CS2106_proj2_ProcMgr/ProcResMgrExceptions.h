@@ -53,4 +53,9 @@ public:
 	const char* what() const throw();
 };
 
+class RuntimeNotInitException : public std::exception{
+public:
+    const char* what() const throw();
+};
+
 #endif

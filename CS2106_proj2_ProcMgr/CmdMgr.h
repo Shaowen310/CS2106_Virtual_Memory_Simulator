@@ -19,8 +19,7 @@ class CmdUI;
 // This is the main controller
 class CmdMgr{
 private:
-	bool notInitialized = true;
-	Runtime runtime;
+	CmdReceiver cmdRecv;
 	CmdUI* cmdUI;
     
 	Command* createCmd(std::string cmdText);

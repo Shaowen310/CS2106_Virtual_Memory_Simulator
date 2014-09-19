@@ -30,21 +30,21 @@ ResCtrlBlk* Runtime::getRcb(std::string rID) {
 	return NULL;
 }
 
-Runtime::~Runtime() {
-	delete init;
+Runtime::Runtime() {
+    // initialize ready list
+    readyList.resize(MAX_PROC_PRIOR + 1);
+    
+    // initialize resource list
+    initResList();
+    
+    // initialize init process
+    init = new ProcCtrlBlk("init",ProcPriority::INIT,NULL,ProcStatus::READY,&readyList[ProcPriority::INIT],&readyList);
+    
+    schedule();
 }
 
-void Runtime::initialize() {
-	// initialize ready list
-	readyList.resize(MAX_PROC_PRIOR + 1);
-    
-	// initialize resource list
-	initResList();
-    
-	// initialize init process
-	init = new ProcCtrlBlk("init",ProcPriority::INIT,NULL,ProcStatus::READY,&readyList[ProcPriority::INIT],&readyList);
-	
-	schedule();
+Runtime::~Runtime() {
+	delete init;
 }
 
 void Runtime::create(std::string pID, ProcPriority priority) {

@@ -13,10 +13,11 @@
 #include "Runtime.h"
 #include "ProcCtrlBlk.h"
 #include "ProcResMgrExceptions.h"
+#include "CmdReceiver.h"
 
 void Command::execute() { }
 
-CmdCreateProc::CmdCreateProc(std::vector<std::string>& args, Runtime* runtime) {
+CmdCreateProc::CmdCreateProc(std::vector<std::string>& args, CmdReceiver* cmdRecv) : Command(cmdRecv){
 	if (args.size() != 2) {
 		throw InvalidCmdArgException();
 	}
@@ -42,36 +43,30 @@ CmdCreateProc::CmdCreateProc(std::vector<std::string>& args, Runtime* runtime) {
 	else {
 		throw InvalidCmdArgException();
 	}
-    
-	this->runtime = runtime;
 }
 
 void CmdCreateProc::execute() {
-	runtime->create(pID, procPriority);
+	cmdRecv->createProc(pID, procPriority);
 }
 
-CmdTimeOut::CmdTimeOut(Runtime* runtime) {
-	this->runtime = runtime;
-}
+CmdTimeOut::CmdTimeOut(CmdReceiver* cmdRecv) : Command(cmdRecv){}
 
 void CmdTimeOut::execute() {
-	runtime->timeOut();
+	cmdRecv->timeOut();
 }
 
-CmdDeleteProc::CmdDeleteProc(std::vector<std::string>& args, Runtime* runtime) {
+CmdDeleteProc::CmdDeleteProc(std::vector<std::string>& args, CmdReceiver* cmdRecv) : Command(cmdRecv){
 	if (args.size() != 1) {
 		throw InvalidCmdArgException();
 	}
 	pID = args[0];
-    
-	this->runtime = runtime;
 }
 
 void CmdDeleteProc::execute() {
-	runtime->destroy(pID);
+	cmdRecv->destroyProc(pID);
 }
 
-CmdRequestRes::CmdRequestRes(std::vector<std::string>& args, Runtime* runtime) {
+CmdRequestRes::CmdRequestRes(std::vector<std::string>& args, CmdReceiver* cmdRecv) : Command(cmdRecv){
 	if (args.size() != 2) {
 		throw InvalidCmdArgException();
 	}
@@ -87,15 +82,13 @@ CmdRequestRes::CmdRequestRes(std::vector<std::string>& args, Runtime* runtime) {
 	if (this->reqNum < 1) {
 		throw InvalidCmdArgException();
 	}
-    
-	this->runtime = runtime;
 }
 
 void CmdRequestRes::execute() {
-	runtime->request(rID, reqNum);
+	cmdRecv->requestRes(rID, reqNum);
 }
 
-CmdReleaseRes::CmdReleaseRes(std::vector<std::string>& args, Runtime* runtime) {
+CmdReleaseRes::CmdReleaseRes(std::vector<std::string>& args, CmdReceiver* cmdRecv) : Command(cmdRecv){
 	if (args.size() != 2) {
 		throw InvalidCmdArgException();
 	}
@@ -111,18 +104,20 @@ CmdReleaseRes::CmdReleaseRes(std::vector<std::string>& args, Runtime* runtime) {
 	if (this->relNum < 1) {
 		throw InvalidCmdArgException();
 	}
-    
-	this->runtime = runtime;
 }
 
 void CmdReleaseRes::execute() {
-	runtime->release(rID, relNum);
+	cmdRecv->releaseRes(rID, relNum);
 }
 
-CmdInit::CmdInit(Runtime* runtime) {
-	this->runtime = runtime;
-}
+CmdInit::CmdInit(CmdReceiver* cmdRecv) : Command(cmdRecv){}
 
 void CmdInit::execute() {
-	runtime->initialize();
+	cmdRecv->initRuntime();
+}
+
+CmdDeleteRuntime::CmdDeleteRuntime(CmdReceiver* cmdRecv) : Command(cmdRecv) {}
+
+void CmdDeleteRuntime::execute() {
+    cmdRecv->deleteRuntime();
 }

@@ -39,3 +39,7 @@ const char* ReqExceedsResCapException::what() const throw() {
 const char* RelResExceedsOccuException::what() const throw() {
 	return "Tried to release more resources than process actually occupies";
 }
+
+const char* RuntimeNotInitException::what() const throw() {
+    return "Runtime not initialized";
+}

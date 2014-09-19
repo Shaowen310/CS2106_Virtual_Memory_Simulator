@@ -13,9 +13,13 @@
 #include <string>
 #include "ProcCtrlBlk.h"
 #include "Runtime.h"
+#include "CmdReceiver.h"
 
 class Command {
+protected:
+    CmdReceiver* cmdRecv;
 public:
+    Command(CmdReceiver* cmdRecv) { this->cmdRecv = cmdRecv; }
 	virtual void execute();
 };
 
@@ -23,27 +27,22 @@ class CmdCreateProc : public Command {
 private:
 	std::string pID;
 	ProcPriority procPriority;
-	Runtime* runtime;
-    
 public:
-	CmdCreateProc(std::vector<std::string>& args, Runtime* runtime);
+    CmdCreateProc(std::vector<std::string>& args, CmdReceiver* cmdRecv);
 	void execute();
 };
 
 class CmdTimeOut : public Command {
-private:
-	Runtime* runtime;
 public:
-	CmdTimeOut(Runtime* runtime);
+	CmdTimeOut(CmdReceiver* cmdRecv);
 	void execute();
 };
 
 class CmdDeleteProc : public Command {
 private:
 	std::string pID;
-	Runtime* runtime;
 public:
-	CmdDeleteProc(std::vector<std::string>& args, Runtime* runtime);
+	CmdDeleteProc(std::vector<std::string>& args, CmdReceiver* cmdRecv);
 	void execute();
 };
 
@@ -51,9 +50,8 @@ class CmdRequestRes : public Command {
 private:
 	std::string rID;
 	int reqNum;
-	Runtime* runtime;
 public:
-	CmdRequestRes(std::vector<std::string>& args, Runtime* runtime);
+	CmdRequestRes(std::vector<std::string>& args, CmdReceiver* cmdRecv);
 	void execute();
 };
 
@@ -61,18 +59,21 @@ class CmdReleaseRes : public Command {
 private:
 	std::string rID;
 	int relNum;
-	Runtime* runtime;
 public:
-	CmdReleaseRes(std::vector<std::string>& args, Runtime* runtime);
+	CmdReleaseRes(std::vector<std::string>& args, CmdReceiver* cmdRecv);
 	void execute();
 };
 
 class CmdInit : public Command {
-private:
-	Runtime* runtime;
 public:
-	CmdInit(Runtime* runtime);
+	CmdInit(CmdReceiver* cmdRecv);
 	void execute();
+};
+
+class CmdDeleteRuntime : public Command {
+public:
+    CmdDeleteRuntime(CmdReceiver* cmdRecv);
+    void execute();
 };
 
 #endif
