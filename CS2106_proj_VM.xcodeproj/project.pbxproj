@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		03E7F31A19E99C72009EC5BB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F31919E99C72009EC5BB /* main.cpp */; };
+		03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */; };
+		03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */; };
+		03E7F32A19E9A78E009EC5BB /* BitMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32819E9A78E009EC5BB /* BitMap.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,13 @@
 /* Begin PBXFileReference section */
 		03E7F31619E99C72009EC5BB /* CS2106_proj_VM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CS2106_proj_VM; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E7F31919E99C72009EC5BB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicalMemory.cpp; path = Logics/PhysicalMemory.cpp; sourceTree = "<group>"; };
+		03E7F32119E9A155009EC5BB /* PhysicalMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicalMemory.h; path = Logics/PhysicalMemory.h; sourceTree = "<group>"; };
+		03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualMemory.cpp; path = Logics/VirtualMemory.cpp; sourceTree = "<group>"; };
+		03E7F32519E9A3A6009EC5BB /* VirtualMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualMemory.h; path = Logics/VirtualMemory.h; sourceTree = "<group>"; };
+		03E7F32719E9A481009EC5BB /* MemArgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MemArgs.h; path = Logics/MemArgs.h; sourceTree = "<group>"; };
+		03E7F32819E9A78E009EC5BB /* BitMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitMap.cpp; path = Logics/BitMap.cpp; sourceTree = "<group>"; };
+		03E7F32919E9A78E009EC5BB /* BitMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitMap.h; path = Logics/BitMap.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +67,24 @@
 		03E7F31819E99C72009EC5BB /* CS2106_proj_VM */ = {
 			isa = PBXGroup;
 			children = (
+				03E7F32319E9A170009EC5BB /* Logics */,
 				03E7F31919E99C72009EC5BB /* main.cpp */,
 			);
 			path = CS2106_proj_VM;
+			sourceTree = "<group>";
+		};
+		03E7F32319E9A170009EC5BB /* Logics */ = {
+			isa = PBXGroup;
+			children = (
+				03E7F32819E9A78E009EC5BB /* BitMap.cpp */,
+				03E7F32919E9A78E009EC5BB /* BitMap.h */,
+				03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */,
+				03E7F32119E9A155009EC5BB /* PhysicalMemory.h */,
+				03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */,
+				03E7F32519E9A3A6009EC5BB /* VirtualMemory.h */,
+				03E7F32719E9A481009EC5BB /* MemArgs.h */,
+			);
+			name = Logics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03E7F32A19E9A78E009EC5BB /* BitMap.cpp in Sources */,
 				03E7F31A19E99C72009EC5BB /* main.cpp in Sources */,
+				03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */,
+				03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +260,7 @@
 				03E7F31F19E99C72009EC5BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
