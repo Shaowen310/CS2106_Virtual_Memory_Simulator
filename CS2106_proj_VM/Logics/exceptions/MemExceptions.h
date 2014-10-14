@@ -13,6 +13,9 @@
 class AddrOutOfBoundException: public std::exception {
     
 };
+class InvalidPageAccessException: public std::exception {
+    
+};
 class InvalidReadException: public std::exception {
     
 };

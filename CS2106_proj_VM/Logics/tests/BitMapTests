@@ -7,12 +7,13 @@ BitMap bitMap;
 bitMap.occupyPage(30);
 bitMap.occupyPage(1);
 bitMap.occupyPage(32);
-bitMap.occupyPage(1023);
+bitMap.occupyPage(1022);
 bitMap.freePages(5,32);
 
-std::cout << bitMap.findFreePages(2);
+std::cout << bitMap.findFreePages(2) << std::endl;
 bitMap.occupyPages(100,100);
 bitMap.printMap();
+std::cout << bitMap.isPageFree(1) << std::endl;
 
 return 0;
 }

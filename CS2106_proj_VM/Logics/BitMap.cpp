@@ -154,6 +154,13 @@ int BitMap::findFreePages(int numRequired) {
     throw InsufficientMemoryException();
 }
 
+bool BitMap::isPageFree(int pageNo) {
+    if (pageNo < 0 || pageNo >= totalPageNum) {
+        throw PageNoOutOfBoundException();
+    }
+    return isPageFreeProtected(pageNo);
+}
+
 void BitMap::printMask() {
     for (int i = 0; i < maskSize; i++) {
         std::cout << i << ' ' << masks[i] << std::endl;

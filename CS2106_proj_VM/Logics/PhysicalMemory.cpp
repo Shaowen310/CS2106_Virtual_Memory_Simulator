@@ -8,13 +8,13 @@
 
 #include "PhysicalMemory.h"
 #include "MemExceptions.h"
+#include <iostream>
 
 PhysicalMemory::PhysicalMemory() {
-    this->memSize = (1 << PAGE_LENGTH) << FRAME_LENGTH;
+    this->pageSize = 1 << PAGE_LENGTH;
+    this->memSize = pageSize << FRAME_LENGTH;
     this->valid = new bool[memSize];
-    for (int i = 0; i < memSize; i++) {
-        this->valid[i] = false;
-    }
+    // not going to initialize validity, initialize during allocation step
     this->data = new int[memSize];
 }
 
@@ -27,6 +27,9 @@ int PhysicalMemory::read(int addr) {
     if (addr < 0 || addr >= memSize) {
         throw AddrOutOfBoundException();
     }
+    if (bitMap.isPageFree(addr >> PAGE_LENGTH)) {
+        throw InvalidPageAccessException();
+    }
     if (!valid[addr]) {
         throw InvalidReadException();
     }
@@ -37,7 +40,53 @@ void PhysicalMemory::write(int addr, int data) {
     if (addr < 0 || addr >= memSize) {
         throw AddrOutOfBoundException();
     }
+    if (bitMap.isPageFree(addr >> PAGE_LENGTH)) {
+        throw InvalidPageAccessException();
+    }
     valid[addr] = true;
     this->data[addr] = data;
 }
 
+int PhysicalMemory::allocNewPage() {
+    int freePageNo = bitMap.findFreePage();
+    // occupy
+    bitMap.occupyPage(freePageNo);
+    int startAddr = (freePageNo << PAGE_LENGTH);
+    for (int i = 0; i < pageSize; i++) {
+        valid[startAddr + i] = false;
+    }
+    return startAddr;
+}
+
+int PhysicalMemory::allocTable(int num) {
+    int freePageStartNo = bitMap.findFreePages(num);
+    // occupy
+    bitMap.occupyPages(freePageStartNo, num);
+    int startAddr = (freePageStartNo << PAGE_LENGTH);
+    for (int i = 0; i < pageSize * num; i++) {
+        data[startAddr + i] = 0;
+        valid[startAddr + i] = true;
+    }
+    return startAddr;
+}
+
+void PhysicalMemory::printValidDataOfPage(int pageNo) {
+    std::cout << "Page number: " << pageNo << std::endl;
+    try {
+        if (bitMap.isPageFree(pageNo)) {
+            std::cout << "Page not initialized" << std::endl;
+        }
+        else {
+            int startAddr = (pageNo << PAGE_LENGTH);
+            for (int i = 0; i < pageSize; i++) {
+                if (valid[startAddr + i]) {
+                    std::cout << i << ' ' << data[startAddr + i] << std::endl;
+                }
+            }
+        }
+    }
+    catch (PageNoOutOfBoundException& e) {
+        std::cout << "Page number out of bound!" << std::endl;
+    }
+
+}

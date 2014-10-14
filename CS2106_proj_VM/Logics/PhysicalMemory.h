@@ -17,9 +17,10 @@
 class PhysicalMemory{
 private:
     int memSize;
+    int pageSize;
     bool* valid; // memSize
     int* data; // memSize
-    BitMap bitMap();
+    BitMap bitMap;
 public:
     PhysicalMemory();
     ~PhysicalMemory();
@@ -39,6 +40,8 @@ public:
     int read(int addr);
     // error checking required
     void write(int addr, int data);
+    
+    void printValidDataOfPage(int pageNo);
 };
 
 #endif /* defined(__CS2106_proj_VM__PhysicalMemory__) */

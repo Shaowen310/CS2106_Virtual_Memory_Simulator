@@ -6,23 +6,26 @@
 //  Copyright (c) 2014 Zsw. All rights reserved.
 //
 
-#include "BitMap.h"
+#include "PhysicalMemory.h"
 #include <iostream>
 
 int main(int argc, const char * argv[]) {
-    BitMap bitMap;
+    PhysicalMemory pm;
     
-    bitMap.occupyPage(30);
-    bitMap.occupyPage(1);
-    bitMap.occupyPage(32);
-    bitMap.occupyPage(1023);
-    bitMap.freePages(5,32);
+    pm.allocTable(2);
+    pm.printValidDataOfPage(0);
+    pm.printValidDataOfPage(2);
+    std::cout << pm.read(0) << std::endl;
+    pm.printValidDataOfPage(1023);
+    pm.printValidDataOfPage(1024);
+//    pm.printValidDataOfPage(0);
+//    pm.printValidDataOfPage(1);
+//    pm.printValidDataOfPage(2);
     
-    
-    
-    std::cout << bitMap.findFreePages(2);
-    bitMap.occupyPages(100,100);
-    bitMap.printMap();
+    pm.allocNewPage();
+//    pm.read(1024);
+    pm.write(1024, 1);
+    std::cout << pm.read(1024) << std::endl;
     
     return 0;
 }

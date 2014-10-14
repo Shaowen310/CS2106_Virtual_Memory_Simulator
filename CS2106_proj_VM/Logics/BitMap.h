@@ -43,6 +43,8 @@ public:
     void freePage(int pageNo);
     void freePages(int startPageNo, int numConsecutive);
     
+    bool isPageFree(int pageNo);
+    
     void printMap();
     void printMask();
 };
