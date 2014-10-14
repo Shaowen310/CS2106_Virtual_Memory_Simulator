@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		039E76C519ECD410008F5804 /* MemExceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039E76C319ECD410008F5804 /* MemExceptions.cpp */; };
 		03E7F31A19E99C72009EC5BB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F31919E99C72009EC5BB /* main.cpp */; };
 		03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */; };
 		03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */; };
@@ -26,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		039E76C319ECD410008F5804 /* MemExceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemExceptions.cpp; path = Logics/exceptions/MemExceptions.cpp; sourceTree = "<group>"; };
+		039E76C419ECD410008F5804 /* MemExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemExceptions.h; path = Logics/exceptions/MemExceptions.h; sourceTree = "<group>"; };
 		03E7F31619E99C72009EC5BB /* CS2106_proj_VM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CS2106_proj_VM; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E7F31919E99C72009EC5BB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicalMemory.cpp; path = Logics/PhysicalMemory.cpp; sourceTree = "<group>"; };
@@ -48,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		039E76C219ECD3AF008F5804 /* exceptions */ = {
+			isa = PBXGroup;
+			children = (
+				039E76C319ECD410008F5804 /* MemExceptions.cpp */,
+				039E76C419ECD410008F5804 /* MemExceptions.h */,
+			);
+			name = exceptions;
+			sourceTree = "<group>";
+		};
 		03E7F30D19E99C72009EC5BB = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +88,7 @@
 		03E7F32319E9A170009EC5BB /* Logics */ = {
 			isa = PBXGroup;
 			children = (
+				039E76C219ECD3AF008F5804 /* exceptions */,
 				03E7F32819E9A78E009EC5BB /* BitMap.cpp */,
 				03E7F32919E9A78E009EC5BB /* BitMap.h */,
 				03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */,
@@ -147,6 +160,7 @@
 				03E7F31A19E99C72009EC5BB /* main.cpp in Sources */,
 				03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */,
 				03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */,
+				039E76C519ECD410008F5804 /* MemExceptions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

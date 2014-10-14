@@ -10,7 +10,16 @@
 #define __CS2106_proj_VM__VirtualMemory__
 
 #include "MemArgs.h"
-// PAGE_SIZE defined in MemArgs.h
-// PAGE_TABLE_SIZE defined in MemArgs.h
+// PAGE_LENGTH defined in MemArgs.h
+// PAGE_TABLE_LENGTH defined in MemArgs.h
+// SEGMENT_TABLE_LENGTH defined in MemArgs.h
+#include "PhysicalMemory.h"
+
+class VirtualMemory {
+private:
+    PhysicalMemory physicalMemory();
+public:
+    
+};
 
 #endif /* defined(__CS2106_proj_VM__VirtualMemory__) */
