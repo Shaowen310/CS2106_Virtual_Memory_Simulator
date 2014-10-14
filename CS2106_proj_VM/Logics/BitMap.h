@@ -12,12 +12,20 @@
 #include "MemArgs.h"
 // FRAME_LENGTH defined in MemArgs.h
 
+// use big-endian system, 0001 for 0, 1000 for 3
+// use first-fit algorithm to allocate memory
 class BitMap {
 private:
     int mapSize; // frameSize / (sizeof(int) * 8)
     int* map; 
     int maskSize; // sizeof(int) * 8
     int* masks;
+    int currentPageNo;
+    int totalPageNum;
+protected:
+    void occupyPageProtected(int pageNo);
+    void freePageProtected(int pageNo);
+    bool isPageFreeProtected(int pageNo);
 public:
     BitMap();
     ~BitMap();
@@ -31,8 +39,12 @@ public:
     
     void occupyPage(int pageNo);
     void occupyPages(int startPageNo, int numConsecutive);
+
     void freePage(int pageNo);
     void freePages(int startPageNo, int numConsecutive);
+    
+    void printMap();
+    void printMask();
 };
 
 #endif /* defined(__CS2106_proj_VM__BitMap__) */

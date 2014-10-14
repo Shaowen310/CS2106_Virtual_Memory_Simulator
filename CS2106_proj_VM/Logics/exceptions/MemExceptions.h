@@ -16,5 +16,14 @@ class AddrOutOfBoundException: public std::exception {
 class InvalidReadException: public std::exception {
     
 };
+class PageNoOutOfBoundException: public std::exception {
+    
+};
+class OccupyAlreadyOccupiedBitException: public std::exception {
+    
+};
+class InsufficientMemoryException: public std::exception {
+    
+};
 
 #endif /* defined(__CS2106_proj_VM__MemExceptions__) */

@@ -6,10 +6,23 @@
 //  Copyright (c) 2014 Zsw. All rights reserved.
 //
 
+#include "BitMap.h"
 #include <iostream>
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    BitMap bitMap;
+    
+    bitMap.occupyPage(30);
+    bitMap.occupyPage(1);
+    bitMap.occupyPage(32);
+    bitMap.occupyPage(1023);
+    bitMap.freePages(5,32);
+    
+    
+    
+    std::cout << bitMap.findFreePages(2);
+    bitMap.occupyPages(100,100);
+    bitMap.printMap();
+    
     return 0;
 }
