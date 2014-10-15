@@ -28,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		037F848C19EE8CB400F0A078 /* BufferTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BufferTests; path = Logics/tests/BufferTests; sourceTree = "<group>"; };
 		039E76C319ECD410008F5804 /* MemExceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemExceptions.cpp; path = Logics/exceptions/MemExceptions.cpp; sourceTree = "<group>"; };
 		039E76C419ECD410008F5804 /* MemExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemExceptions.h; path = Logics/exceptions/MemExceptions.h; sourceTree = "<group>"; };
 		039E76C819ED5811008F5804 /* BitMapTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BitMapTests; path = Logics/tests/BitMapTests; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 				039E76C819ED5811008F5804 /* BitMapTests */,
 				039E76CA19ED65F2008F5804 /* PhysicalMemoryTests */,
 				03A0218819EE10F700E2C1E8 /* VirtualMemoryTests */,
+				037F848C19EE8CB400F0A078 /* BufferTests */,
 			);
 			name = tests;
 			sourceTree = "<group>";

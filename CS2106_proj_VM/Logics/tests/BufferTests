@@ -1,0 +1,24 @@
+#include "TranslationLookAsideBuffer.h"
+#include <iostream>
+
+int main(int argc, const char * argv[]) {
+TranslationLookAsideBuffer buffer;
+
+std::cout << buffer.access(0, 0) << std::endl;
+
+buffer.push(0, 0, 0);
+buffer.push(1, 1, 1);
+buffer.push(2, 2, 2);
+buffer.push(3, 3, 3);
+
+std::cout << buffer.access(0, 0) << std::endl;
+
+buffer.push(4, 4, 4);
+
+std::cout << buffer.access(3, 3) << std::endl;
+std::cout << buffer.access(3, 3) << std::endl;
+
+std::cout << buffer.access(1, 1) << std::endl;
+
+return 0;
+}

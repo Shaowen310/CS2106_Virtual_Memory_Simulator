@@ -14,6 +14,7 @@
 // PAGE_TABLE_LENGTH defined in MemArgs.h
 // SEGMENT_TABLE_LENGTH defined in MemArgs.h
 #include "PhysicalMemory.h"
+#include "TranslationLookAsideBuffer.h"
 
 class VirtualMemory {
 private:
@@ -24,10 +25,12 @@ private:
     int pageTableSize;
     int pageTablePageNum;
     
+    TranslationLookAsideBuffer tlb;
     PhysicalMemory physicalMem;
 protected:
     int translateSegNoProtected(int segNo); // returns pageTableRefAddr
     int translatePageNoProtected(int pageNo, int pageTableStartAddr); // returns pageRefAddr
+    int translateToPageAddrProtected(int segNo, int pageNo, bool write);
 public:
     VirtualMemory();
     
@@ -35,6 +38,7 @@ public:
     void fillPageTable(int pageNo, int segNo, int pageStartAddr);
     
     int translate(int virtualAddr, bool write);
+    int translateWithBuffer(int virtualAddr, bool write, bool debugMode = false);
     
     int read(int virtualAddr);
     void write(int virtualAddr, int data);

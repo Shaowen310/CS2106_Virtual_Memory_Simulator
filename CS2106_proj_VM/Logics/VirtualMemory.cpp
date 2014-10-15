@@ -8,6 +8,7 @@
 
 #include "VirtualMemory.h"
 #include "MemExceptions.h"
+#include <cstdio>
 
 VirtualMemory::VirtualMemory() {
     this->segmentTableSize = (1 << SEGMENT_TABLE_LENGTH);
@@ -20,15 +21,7 @@ VirtualMemory::VirtualMemory() {
     this->pageTablePageNum = (1 << (PAGE_TABLE_LENGTH - PAGE_LENGTH));
 }
 
-int VirtualMemory::translate(int virtualAddr, bool write) {
-    int segNo = (virtualAddr >> (PAGE_TABLE_LENGTH + PAGE_LENGTH));
-    int pageNo = (virtualAddr >> PAGE_LENGTH) % pageTableSize;
-    int offset = virtualAddr % (1 << PAGE_LENGTH);
-    
-    if (segNo < 0 || segNo >= segmentTableSize) {
-        throw SegmentNoOutOfBoundException();
-    }
-    
+int VirtualMemory::translateToPageAddrProtected(int segNo, int pageNo, bool write) {
     int pageTableRefAddr = translateSegNoProtected(segNo);
     int pageTableStartAddr = physicalMem.read(pageTableRefAddr);
     if (pageTableStartAddr == PAGE_NOT_IN_MEMORY) {
@@ -61,7 +54,7 @@ int VirtualMemory::translate(int virtualAddr, bool write) {
         }
     }
     
-    return pageStartAddr + offset;
+    return pageStartAddr;
 }
 
 int VirtualMemory::translateSegNoProtected(int segNo) {
@@ -102,6 +95,44 @@ void VirtualMemory::fillPageTable(int pageNo, int segNo, int pageStartAddr) {
         physicalMem.initPage(pageStartAddr);
     }
     physicalMem.write(pageRefAddr, pageStartAddr);
+}
+
+int VirtualMemory::translate(int virtualAddr, bool write) {
+    int segNo = (virtualAddr >> (PAGE_TABLE_LENGTH + PAGE_LENGTH));
+    int pageNo = (virtualAddr >> PAGE_LENGTH) % pageTableSize;
+    int offset = virtualAddr % (1 << PAGE_LENGTH);
+    
+    if (segNo < 0 || segNo >= segmentTableSize) {
+        throw SegmentNoOutOfBoundException();
+    }
+    
+    return translateToPageAddrProtected(segNo, pageNo, write) + offset;
+}
+
+int VirtualMemory::translateWithBuffer(int virtualAddr, bool write, bool debugMode) {
+    int segNo = (virtualAddr >> (PAGE_TABLE_LENGTH + PAGE_LENGTH));
+    int pageNo = (virtualAddr >> PAGE_LENGTH) % pageTableSize;
+    int offset = virtualAddr % (1 << PAGE_LENGTH);
+    
+    if (segNo < 0 || segNo >= segmentTableSize) {
+        throw SegmentNoOutOfBoundException();
+    }
+    
+    int pageAddr = tlb.access(segNo, pageNo);
+    
+    if (pageAddr == PAGE_ADDR_NOT_BUFFERED) {
+        pageAddr = translateToPageAddrProtected(segNo, pageNo, write);
+        if (debugMode) {
+            fprintf(stderr, "m ");
+        }
+        tlb.push(segNo, pageNo, pageAddr);
+    } else {
+        if (debugMode) {
+            fprintf(stderr, "h ");
+        }
+    }
+    
+    return pageAddr + offset;
 }
 
 int VirtualMemory::read(int virtualAddr) {
