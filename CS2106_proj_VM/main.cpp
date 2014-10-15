@@ -16,11 +16,11 @@ int main(int argc, const char * argv[]) {
     vm.fillPageTable(0, 2, 512);
     vm.fillPageTable(1, 2, -1);
     
-    //    vm.printSegmentTable();
-    //    vm.printPageTableOfSeg(2);
+    //  vm.printSegmentTable();
+    //  vm.printPageTableOfSeg(2);
     
-    //    vm.printPage(0);
-    //    vm.read(0);
+    //  vm.printPage(0);
+    //  vm.read(0);
     std::cout << vm.translate(1048576, false) << std::endl;
     std::cout << vm.translate(1048586, true) << std::endl;
     std::cout << vm.translate(1049088, true) << std::endl;

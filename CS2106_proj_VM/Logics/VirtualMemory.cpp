@@ -113,8 +113,14 @@ void VirtualMemory::write(int virtualAddr, int data) {
 }
 
 void VirtualMemory::printSegmentTable() {
+    int totalPageNum = 1 << FRAME_LENGTH;
+    int pageNo = SEGMENT_TABLE_START_ADDR >> PAGE_LENGTH;
     for (int i = 0; i < segmentTablePageNum; i++) {
-        physicalMem.printValidDataOfPage(SEGMENT_TABLE_START_ADDR + i);
+        physicalMem.printValidDataOfPage(pageNo);
+        pageNo++;
+        if (pageNo == totalPageNum) {
+            pageNo = 0;
+        }
     }
 }
 
