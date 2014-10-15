@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		039E76C519ECD410008F5804 /* MemExceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039E76C319ECD410008F5804 /* MemExceptions.cpp */; };
+		039E76CE19ED7144008F5804 /* TranslationLookAsideBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039E76CC19ED7144008F5804 /* TranslationLookAsideBuffer.cpp */; };
 		03E7F31A19E99C72009EC5BB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F31919E99C72009EC5BB /* main.cpp */; };
 		03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */; };
 		03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */; };
@@ -31,6 +32,11 @@
 		039E76C419ECD410008F5804 /* MemExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemExceptions.h; path = Logics/exceptions/MemExceptions.h; sourceTree = "<group>"; };
 		039E76C819ED5811008F5804 /* BitMapTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BitMapTests; path = Logics/tests/BitMapTests; sourceTree = "<group>"; };
 		039E76CA19ED65F2008F5804 /* PhysicalMemoryTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhysicalMemoryTests; path = Logics/tests/PhysicalMemoryTests; sourceTree = "<group>"; };
+		039E76CC19ED7144008F5804 /* TranslationLookAsideBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TranslationLookAsideBuffer.cpp; path = Logics/TranslationLookAsideBuffer.cpp; sourceTree = "<group>"; };
+		039E76CD19ED7144008F5804 /* TranslationLookAsideBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TranslationLookAsideBuffer.h; path = Logics/TranslationLookAsideBuffer.h; sourceTree = "<group>"; };
+		03A0218819EE10F700E2C1E8 /* VirtualMemoryTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VirtualMemoryTests; path = Logics/tests/VirtualMemoryTests; sourceTree = "<group>"; };
+		03A0218B19EE130400E2C1E8 /* sampleInputs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sampleInputs; path = tests/sampleInputs; sourceTree = "<group>"; };
+		03A0218D19EE136E00E2C1E8 /* sampleOutputs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sampleOutputs; path = tests/sampleOutputs; sourceTree = "<group>"; };
 		03E7F31619E99C72009EC5BB /* CS2106_proj_VM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CS2106_proj_VM; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E7F31919E99C72009EC5BB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03E7F32019E9A155009EC5BB /* PhysicalMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicalMemory.cpp; path = Logics/PhysicalMemory.cpp; sourceTree = "<group>"; };
@@ -67,6 +73,16 @@
 			children = (
 				039E76C819ED5811008F5804 /* BitMapTests */,
 				039E76CA19ED65F2008F5804 /* PhysicalMemoryTests */,
+				03A0218819EE10F700E2C1E8 /* VirtualMemoryTests */,
+			);
+			name = tests;
+			sourceTree = "<group>";
+		};
+		03A0218A19EE12D700E2C1E8 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				03A0218B19EE130400E2C1E8 /* sampleInputs */,
+				03A0218D19EE136E00E2C1E8 /* sampleOutputs */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -90,6 +106,7 @@
 		03E7F31819E99C72009EC5BB /* CS2106_proj_VM */ = {
 			isa = PBXGroup;
 			children = (
+				03A0218A19EE12D700E2C1E8 /* tests */,
 				03E7F32319E9A170009EC5BB /* Logics */,
 				03E7F31919E99C72009EC5BB /* main.cpp */,
 			);
@@ -108,6 +125,8 @@
 				03E7F32419E9A3A6009EC5BB /* VirtualMemory.cpp */,
 				03E7F32519E9A3A6009EC5BB /* VirtualMemory.h */,
 				03E7F32719E9A481009EC5BB /* MemArgs.h */,
+				039E76CC19ED7144008F5804 /* TranslationLookAsideBuffer.cpp */,
+				039E76CD19ED7144008F5804 /* TranslationLookAsideBuffer.h */,
 			);
 			name = Logics;
 			sourceTree = "<group>";
@@ -169,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03E7F32A19E9A78E009EC5BB /* BitMap.cpp in Sources */,
+				039E76CE19ED7144008F5804 /* TranslationLookAsideBuffer.cpp in Sources */,
 				03E7F31A19E99C72009EC5BB /* main.cpp in Sources */,
 				03E7F32619E9A3A6009EC5BB /* VirtualMemory.cpp in Sources */,
 				03E7F32219E9A155009EC5BB /* PhysicalMemory.cpp in Sources */,

@@ -4,16 +4,22 @@
 int main(int argc, const char * argv[]) {
 BitMap bitMap;
 
-bitMap.occupyPage(30);
-bitMap.occupyPage(1);
-bitMap.occupyPage(32);
-bitMap.occupyPage(1022);
-bitMap.freePages(5,32);
+//    bitMap.occupyPage(30);
+//    bitMap.occupyPage(1);
+//    bitMap.occupyPage(32);
+//    bitMap.occupyPage(1022);
+//    bitMap.freePages(5,32);
+//
+//    std::cout << bitMap.findFreePages(2) << std::endl;
+//    bitMap.occupyPages(100,100);
+//    bitMap.printMap();
+//    std::cout << bitMap.isPageFree(1) << std::endl;
 
-std::cout << bitMap.findFreePages(2) << std::endl;
-bitMap.occupyPages(100,100);
+bitMap.occupyPages(2, 1023);
 bitMap.printMap();
-std::cout << bitMap.isPageFree(1) << std::endl;
-
+bitMap.findFreePage();
+std::cout << bitMap.findFreePages(1) << std::endl;
+bitMap.findFreePages(2);
+//    bitMap.printMap();
 return 0;
 }

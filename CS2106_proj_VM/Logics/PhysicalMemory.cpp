@@ -47,17 +47,6 @@ void PhysicalMemory::write(int addr, int data) {
     this->data[addr] = data;
 }
 
-int PhysicalMemory::allocNewPage() {
-    int freePageNo = bitMap.findFreePage();
-    // occupy
-    bitMap.occupyPage(freePageNo);
-    int startAddr = (freePageNo << PAGE_LENGTH);
-    for (int i = 0; i < pageSize; i++) {
-        valid[startAddr + i] = false;
-    }
-    return startAddr;
-}
-
 int PhysicalMemory::allocTable(int num) {
     int freePageStartNo = bitMap.findFreePages(num);
     // occupy
@@ -68,6 +57,42 @@ int PhysicalMemory::allocTable(int num) {
         valid[startAddr + i] = true;
     }
     return startAddr;
+}
+
+void PhysicalMemory::initTable(int num, int startAddr) {
+    // occupy
+    if (startAddr % pageSize) {
+        throw AddrUnalignedException();
+    }
+    int startPageNo = (startAddr >> PAGE_LENGTH);
+    bitMap.occupyPages(startPageNo, num);
+    for (int i = 0; i < pageSize * num; i++) {
+        data[startAddr + i] = 0;
+        valid[startAddr + i] = true;
+    }
+}
+
+int PhysicalMemory::allocPage() {
+    int freePageNo = bitMap.findFreePage();
+    // occupy
+    bitMap.occupyPage(freePageNo);
+    int startAddr = (freePageNo << PAGE_LENGTH);
+    for (int i = 0; i < pageSize; i++) {
+        valid[startAddr + i] = false;
+    }
+    return startAddr;
+}
+
+void PhysicalMemory::initPage(int startAddr) {
+    // occupy
+    if (startAddr % pageSize) {
+        throw AddrUnalignedException();
+    }
+    int pageNo = (startAddr >> PAGE_LENGTH);
+    bitMap.occupyPage(pageNo);
+    for (int i = 0; i < pageSize; i++) {
+        valid[startAddr + i] = false;
+    }
 }
 
 void PhysicalMemory::printValidDataOfPage(int pageNo) {

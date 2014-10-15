@@ -1,0 +1,17 @@
+#include "VirtualMemory.h"
+#include <iostream>
+
+int main(int argc, const char * argv[]) {
+VirtualMemory vm;
+
+vm.fillSegmentTable(2, 2048);
+vm.fillPageTable(0, 2, 512);
+vm.fillPageTable(1, 2, -1);
+
+//    vm.printSegmentTable();
+//    vm.printPageTableOfSeg(2);
+
+vm.printPage(0);
+
+return 0;
+}

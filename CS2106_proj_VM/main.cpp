@@ -6,26 +6,24 @@
 //  Copyright (c) 2014 Zsw. All rights reserved.
 //
 
-#include "PhysicalMemory.h"
+#include "VirtualMemory.h"
 #include <iostream>
 
 int main(int argc, const char * argv[]) {
-    PhysicalMemory pm;
+    VirtualMemory vm;
     
-    pm.allocTable(2);
-    pm.printValidDataOfPage(0);
-    pm.printValidDataOfPage(2);
-    std::cout << pm.read(0) << std::endl;
-    pm.printValidDataOfPage(1023);
-    pm.printValidDataOfPage(1024);
-//    pm.printValidDataOfPage(0);
-//    pm.printValidDataOfPage(1);
-//    pm.printValidDataOfPage(2);
+    vm.fillSegmentTable(2, 2048);
+    vm.fillPageTable(0, 2, 512);
+    vm.fillPageTable(1, 2, -1);
     
-    pm.allocNewPage();
-//    pm.read(1024);
-    pm.write(1024, 1);
-    std::cout << pm.read(1024) << std::endl;
+    //    vm.printSegmentTable();
+    //    vm.printPageTableOfSeg(2);
+    
+//    vm.printPage(0);
+//    vm.read(0);
+    std::cout << vm.translate(1048576, false) << std::endl;
+    std::cout << vm.translate(1048586, true) << std::endl;
+    std::cout << vm.translate(1049088, true) << std::endl;
     
     return 0;
 }

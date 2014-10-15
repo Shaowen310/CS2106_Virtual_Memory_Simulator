@@ -28,12 +28,14 @@ public:
     // create segment table with num of pages and give the starting address
     // all data are initialized to 0, and data are valid
     // error checking required
-    int allocTable(int num);
+    int allocTable(int num); // returns address
+    void initTable(int num, int startAddr);
     
     // create a new page and give the starting address
     // all data are not initialized and are invalid
     // error checking required
-    int allocNewPage();
+    int allocPage(); // returns address
+    void initPage(int startAddr);
     
     // addr must >=0 and <memSize, and addr corresponds pageNum + offset
     // error checking required

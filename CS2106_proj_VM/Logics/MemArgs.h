@@ -21,4 +21,9 @@
 #define PAGE_TABLE_LENGTH 10
 #define SEGMENT_TABLE_LENGTH 9
 
+#define SEGMENT_TABLE_START_ADDR 0
+
+#define PAGE_NOT_IN_MEMORY -1
+#define PAGE_NOT_EXIST 0
+
 #endif
