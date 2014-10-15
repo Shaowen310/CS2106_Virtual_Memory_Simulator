@@ -20,7 +20,8 @@ private:
     int* map; 
     int maskSize; // sizeof(int) * 8
     int* masks;
-    int currentPageNo;
+    // always search from zero
+    const int searchStartPageNo = 0;
     int totalPageNum;
 protected:
     void occupyPageProtected(int pageNo);

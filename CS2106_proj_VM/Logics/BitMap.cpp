@@ -25,8 +25,6 @@ BitMap::BitMap() {
     for (int i = 0; i < mapSize; i++) {
         this->map[i] = 0;
     }
-    
-    currentPageNo = 0;
 }
 
 BitMap::~BitMap() {
@@ -41,10 +39,6 @@ void BitMap::occupyPageProtected(int pageNo) {
         throw OccupyAlreadyOccupiedBitException();
     }
     map[mapNo] |= masks[offset];
-    currentPageNo = pageNo + 1;
-    if (currentPageNo == totalPageNum) {
-        currentPageNo = 0;
-    }
 }
 
 void BitMap::occupyPage(int pageNo) {
@@ -108,7 +102,7 @@ bool BitMap::isPageFreeProtected(int pageNo) {
 }
 
 int BitMap::findFreePage() {
-    int tempPageNo = currentPageNo;
+    int tempPageNo = searchStartPageNo;
     do {
         if (isPageFreeProtected(tempPageNo)) {
             return tempPageNo;
@@ -118,7 +112,7 @@ int BitMap::findFreePage() {
             tempPageNo = 0;
         }
     }
-    while (tempPageNo != currentPageNo);
+    while (tempPageNo != searchStartPageNo);
     throw InsufficientMemoryException();
 }
 
@@ -126,7 +120,7 @@ int BitMap::findFreePages(int numRequired) {
     if (numRequired > totalPageNum) {
         throw InsufficientMemoryException();
     }
-    int tempPageNo = currentPageNo;
+    int tempPageNo = searchStartPageNo;
     int traversed = 0;
     do {
         traversed++;
