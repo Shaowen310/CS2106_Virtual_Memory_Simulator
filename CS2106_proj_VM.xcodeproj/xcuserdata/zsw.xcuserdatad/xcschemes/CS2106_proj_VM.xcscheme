@@ -57,6 +57,20 @@
             ReferencedContainer = "container:CS2106_proj_VM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/zsw/Documents/NUS/CS/CS2106/Proj/VM/sample-input1.txt"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/zsw/Documents/NUS/CS/CS2106/Proj/VM/sample-input2.txt"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "nobuffer"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
