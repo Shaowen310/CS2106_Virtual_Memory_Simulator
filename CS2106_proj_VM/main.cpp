@@ -56,6 +56,9 @@ int main(int argc, const char * argv[]) {
     readInitFile(initFile, vm);
     readRunFile(runFile, hasBuffer, vm);
     
+    initFile.close();
+    runFile.close();
+    
     return 0;
 }
 
