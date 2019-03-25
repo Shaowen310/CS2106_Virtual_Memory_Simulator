@@ -42,7 +42,8 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
     ssize_t bytes_read = 0;
 
     // check if buffer has been written
-    if (*buf != 0) {
+    if (*buf != 0)
+    {
         return 0;
     }
 
@@ -60,8 +61,9 @@ ssize_t onebyte_write(struct file *filep, const char *buf,
     copy_from_user(onebyte_data, buf, sizeof(char));
 
     // prevent buffer overflow
-    if (count > sizeof(char)) {
-        prink(KERN_ALERT "No space left on device.\n");
+    if (count > sizeof(char))
+    {
+        printk(KERN_ALERT "No space left on device.\n");
         return -ENOSPC;
     }
 
