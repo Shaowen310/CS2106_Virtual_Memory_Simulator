@@ -10,7 +10,9 @@ Output files:
     SJF.txt
 '''
 import sys
+import heapq
 from collections import deque
+
 
 input_file = 'input.txt'
 
@@ -63,7 +65,8 @@ def RR_scheduling(process_list, time_quantum):
 
     for process in process_list:
         if len(ready_queue) == 0:
-            ready_queue.append([process, process.burst_time, min(time_quantum, process.burst_time)])
+            ready_queue.append(
+                [process, process.burst_time, min(time_quantum, process.burst_time)])
             schedule.append((process.arrive_time, process.id))
             continue
         # else: len(ready_queue) > 0
@@ -72,9 +75,9 @@ def RR_scheduling(process_list, time_quantum):
             # CPU idle
             current_time = running_process.arrive_time
         # therefore current_time >= running_process.arrive_time
-        assert current_time <= process.arrive_time
         if current_time == process.arrive_time:
-            ready_queue.append([process, process.burst_time, min(time_quantum, process.burst_time)])
+            ready_queue.append(
+                [process, process.burst_time, min(time_quantum, process.burst_time)])
             continue
         # else: current_time < process.arrive_time
         # CPU busy, RR until find max(current_time) s.t. current_time < process.arrive_time
@@ -82,7 +85,8 @@ def RR_scheduling(process_list, time_quantum):
         while provision_time <= process.arrive_time:
             if ready_queue[0][1] <= ready_queue[0][2]:
                 # process finished
-                waiting_time += provision_time - running_process.burst_time - running_process.arrive_time
+                waiting_time += provision_time - \
+                    running_process.burst_time - running_process.arrive_time
                 ready_queue.popleft()
             else:
                 ready_queue[0][1] -= ready_queue[0][2]
@@ -96,14 +100,16 @@ def RR_scheduling(process_list, time_quantum):
             provision_time = current_time + ready_queue[0][2]
         # provision_time > process.arrive_time, make current_time == process.arrive_time
         if len(ready_queue) == 0:
-            ready_queue.append([process, process.burst_time, min(time_quantum, process.burst_time)])
+            ready_queue.append(
+                [process, process.burst_time, min(time_quantum, process.burst_time)])
             schedule.append((process.arrive_time, process.id))
             continue
         # else: len(ready_queue) > 0
         ready_queue[0][1] -= process.arrive_time - current_time
         ready_queue[0][2] -= process.arrive_time - current_time
         current_time = process.arrive_time
-        ready_queue.append([process, process.burst_time, min(time_quantum, process.burst_time)])
+        ready_queue.append([process, process.burst_time,
+                            min(time_quantum, process.burst_time)])
 
     # flush ready queue
     provision_time = current_time + ready_queue[0][2]
@@ -111,7 +117,8 @@ def RR_scheduling(process_list, time_quantum):
         running_process = ready_queue[0][0]
         if ready_queue[0][1] <= ready_queue[0][2]:
             # process finished
-            waiting_time += provision_time - running_process.burst_time - running_process.arrive_time
+            waiting_time += provision_time - \
+                running_process.burst_time - running_process.arrive_time
             ready_queue.popleft()
         else:
             ready_queue[0][1] -= ready_queue[0][2]
@@ -125,11 +132,60 @@ def RR_scheduling(process_list, time_quantum):
         provision_time = current_time + ready_queue[0][2]
 
     average_waiting_time = waiting_time/float(len(process_list))
-    return (schedule, average_waiting_time)
+    return schedule, average_waiting_time
+
+
+class RtPidPair:
+    def __init__(self, rt, pid):
+        self.rt = rt
+        self.pid = pid
+
+    def __lt__(self, other):
+        return self.rt < other.rt
 
 
 def SRTF_scheduling(process_list):
-    return (["to be completed, scheduling process_list on SRTF, using process.burst_time to calculate the remaining time of the current process "], 0.0)
+    # store the (switching time, proccess_id) pair
+    schedule = []
+    current_time = 0
+    # waiting_time = finish_time -burst_time - arrive_time
+    waiting_time = 0
+
+    # remaining time
+    rt_heap = []
+
+    for idx, process in enumerate(process_list):
+        # schedule task within [current_time, process.arrive_time)
+        if len(rt_heap) > 0:
+            time_elapsed = process.arrive_time - current_time
+            time_elapsed_r = time_elapsed
+            while time_elapsed_r > 0 and len(rt_heap) > 0:
+                rt_pid = min(rt_heap)
+                ref_process = process_list[rt_pid.pid]
+                if len(schedule) == 0 or ref_process.id != schedule[-1][1]:
+                    schedule.append(
+                        (current_time + time_elapsed - time_elapsed_r, ref_process.id))
+                if rt_pid.rt <= time_elapsed_r:
+                    time_elapsed_r -= rt_pid.rt
+                    waiting_time += current_time + time_elapsed - time_elapsed_r - \
+                        ref_process.burst_time - ref_process.arrive_time
+                    heapq.heappop(rt_heap)
+                else:
+                    rt_pid.rt -= time_elapsed_r
+                    time_elapsed_r = 0
+        heapq.heappush(rt_heap, RtPidPair(process.burst_time, idx))
+        current_time = process.arrive_time
+
+    # flush heap
+    while len(rt_heap) > 0:
+        rt_pid = heapq.heappop(rt_heap)
+        schedule.append((current_time, ref_process.id))
+        current_time += rt_pid.rt
+        ref_process = process_list[rt_pid.pid]
+        waiting_time += current_time - ref_process.burst_time - ref_process.arrive_time
+
+    average_waiting_time = waiting_time/float(len(process_list))
+    return schedule, average_waiting_time
 
 
 def SJF_scheduling(process_list, alpha):
