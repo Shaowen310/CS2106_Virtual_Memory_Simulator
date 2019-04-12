@@ -1,14 +1,13 @@
-/**
- * GNU C libraries used
- * vasprintf
- */
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE 1
+#endif
 
 #include <stdio.h>
 #include "process.h"
 
 char *process__to_string(struct process_struct *process) {
     char *str = NULL;
-    int error = vasprintf(&str, "[id %d : arrival_time %d,  burst_time %d]", process->id, process->arrive_time, process->burst_time);
+    int error = asprintf(&str, "[id %d : arrival_time %d,  burst_time %d]", process->id, process->arrive_time, process->burst_time);
     if (error == -1) {
         fprintf(stderr, "String allocation failed.");
         str = "";

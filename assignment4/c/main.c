@@ -10,11 +10,13 @@
  */
 
 #include <stdio.h>
-// #include "process.h"
+#include <stdlib.h>
+#include "process.h"
 
 int main (int argc, char** argv) {
-    // struct process_struct p0 = {0, 5, 10};
-    // char * str = process_func.to_string(&p0);
-    // printf("%s\n", str);
+    struct process_struct p0 = {0, 5, 10};
+    char * str = process_func.to_string(&p0);
+    printf("%s\n", str);
+    free(str);
     return 0;
 }
