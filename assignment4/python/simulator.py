@@ -47,7 +47,7 @@ def FCFS_scheduling(process_list):
 # Output_2 : Average Waiting Time
 
 # Assumptions:
-# If a new process arrives during context switch, the arriving process will be appended to the queue first
+# If a new process arrives during context switch, the stopping process will be appended to the queue first
 
 
 def RR_scheduling(process_list, time_quantum):
@@ -79,7 +79,7 @@ def RR_scheduling(process_list, time_quantum):
         # else: current_time < process.arrive_time
         # CPU busy, RR until find max(current_time) s.t. current_time < process.arrive_time
         provision_time = current_time + ready_queue[0][2]
-        while provision_time < process.arrive_time:
+        while provision_time <= process.arrive_time:
             if ready_queue[0][1] <= ready_queue[0][2]:
                 # process finished
                 waiting_time += provision_time - running_process.burst_time - running_process.arrive_time
@@ -94,7 +94,7 @@ def RR_scheduling(process_list, time_quantum):
             # else: len(ready_queue) > 0
             schedule.append((current_time, ready_queue[0][0].id))
             provision_time = current_time + ready_queue[0][2]
-        # provision_time >= process.arrive_time, make current_time == process.arrive_time
+        # provision_time > process.arrive_time, make current_time == process.arrive_time
         if len(ready_queue) == 0:
             ready_queue.append([process, process.burst_time, min(time_quantum, process.burst_time)])
             schedule.append((process.arrive_time, process.id))
@@ -115,6 +115,7 @@ def RR_scheduling(process_list, time_quantum):
             ready_queue.popleft()
         else:
             ready_queue[0][1] -= ready_queue[0][2]
+            ready_queue[0][2] = min(time_quantum, ready_queue[0][1])
             ready_queue.append(ready_queue.popleft())
         current_time = provision_time
         if len(ready_queue) == 0:
