@@ -96,7 +96,8 @@ def RR_scheduling(process_list, time_quantum):
             if len(ready_queue) == 0:
                 break
             # else: len(ready_queue) > 0
-            schedule.append((current_time, ready_queue[0][0].id))
+            if ready_queue[0][0].id != schedule[-1][1]:
+                schedule.append((current_time, ready_queue[0][0].id))
             provision_time = current_time + ready_queue[0][2]
         # provision_time > process.arrive_time, make current_time == process.arrive_time
         if len(ready_queue) == 0:
@@ -144,6 +145,13 @@ class RtPidPair:
         return self.rt < other.rt
 
 
+class PCB:
+    def __init__(self, process, uid):
+        self.process = process
+        self.remain_time = process.burst_time
+        self.uid = uid
+
+
 def SRTF_scheduling(process_list):
     # store the (switching time, proccess_id) pair
     schedule = []
@@ -157,17 +165,16 @@ def SRTF_scheduling(process_list):
     for idx, process in enumerate(process_list):
         # schedule task within [current_time, process.arrive_time)
         if len(rt_heap) > 0:
-            time_elapsed = process.arrive_time - current_time
-            time_elapsed_r = time_elapsed
+            time_elapsed_r = process.arrive_time - current_time
             while time_elapsed_r > 0 and len(rt_heap) > 0:
                 rt_pid = min(rt_heap)
                 ref_process = process_list[rt_pid.pid]
                 if len(schedule) == 0 or ref_process.id != schedule[-1][1]:
                     schedule.append(
-                        (current_time + time_elapsed - time_elapsed_r, ref_process.id))
+                        (process.arrive_time - time_elapsed_r, ref_process.id))
                 if rt_pid.rt <= time_elapsed_r:
                     time_elapsed_r -= rt_pid.rt
-                    waiting_time += current_time + time_elapsed - time_elapsed_r - \
+                    waiting_time += process.arrive_time - time_elapsed_r - \
                         ref_process.burst_time - ref_process.arrive_time
                     heapq.heappop(rt_heap)
                 else:
@@ -179,17 +186,82 @@ def SRTF_scheduling(process_list):
     # flush heap
     while len(rt_heap) > 0:
         rt_pid = heapq.heappop(rt_heap)
-        schedule.append((current_time, ref_process.id))
-        current_time += rt_pid.rt
         ref_process = process_list[rt_pid.pid]
+        if ref_process.id != schedule[-1][1]:
+            schedule.append((current_time, ref_process.id))
+        current_time += rt_pid.rt
         waiting_time += current_time - ref_process.burst_time - ref_process.arrive_time
 
     average_waiting_time = waiting_time/float(len(process_list))
     return schedule, average_waiting_time
 
 
+def exp_avg(alpha, actual, pred):
+    return alpha * actual + (1-alpha) * pred
+
+
 def SJF_scheduling(process_list, alpha):
-    return (["to be completed, scheduling SJF without using information from process.burst_time"], 0.0)
+    # store the (switching time, proccess_id) pair
+    schedule = []
+    schedule_uid = []
+
+    current_time = 0
+    # waiting_time = finish_time -burst_time - arrive_time
+    waiting_time = 0
+
+    # priority
+    pr_heap = []
+
+    # Non-preemptive
+    running_process = None
+
+    initial_guess = 5
+    prev_guess = {}
+    prev_actual = {}
+
+    for idx, process in enumerate(process_list):
+        # schedule task within [current_time, process.arrive_time)
+        time_elapsed_r = process.arrive_time - current_time
+        while time_elapsed_r > 0 and running_process is not None:
+            if len(schedule) == 0 or running_process.uid != schedule_uid[-1]:
+                schedule.append(
+                    (process.arrive_time - time_elapsed_r, running_process.process.id))
+                schedule_uid.append(running_process.uid)
+            if running_process.remain_time <= time_elapsed_r:
+                time_elapsed_r -= running_process.remain_time
+                waiting_time += process.arrive_time - time_elapsed_r - \
+                    running_process.process.burst_time - running_process.process.arrive_time
+                running_process = None
+            else:
+                running_process.remain_time -= time_elapsed_r
+                time_elapsed_r = 0
+            if running_process is None and len(pr_heap) > 0:
+                uid = heapq.heappop(pr_heap).pid
+                running_process = PCB(process_list[uid], uid)
+        if running_process == None:
+            running_process = PCB(process, idx)
+        else:
+            heapq.heappush(pr_heap, RtPidPair(exp_avg(alpha, prev_actual.get(
+                process.id, initial_guess), prev_guess.get(process.id, initial_guess)), idx))
+            prev_actual[process.id] = process.burst_time
+            prev_guess[process.id] = initial_guess
+        current_time = process.arrive_time
+
+    # flush running process and heap
+    while running_process is not None or len(pr_heap) > 0:
+        if running_process is not None:
+            if running_process.process.id != schedule[-1][1]:
+                schedule.append((current_time, running_process.process.id))
+            current_time += running_process.remain_time
+            waiting_time += current_time - running_process.process.burst_time - \
+                running_process.process.arrive_time
+            running_process = None
+        if running_process is None and len(pr_heap) > 0:
+            uid = heapq.heappop(pr_heap).pid
+            running_process = PCB(process_list[uid], uid)
+
+    average_waiting_time = waiting_time/float(len(process_list))
+    return schedule, average_waiting_time
 
 
 def read_input():
