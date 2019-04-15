@@ -166,24 +166,24 @@ def SRTF_scheduling(process_list):
     rt_heap = []
 
     for idx, process in enumerate(process_list):
-        # schedule task within [current_time, process.arrive_time)
-        if len(rt_heap) > 0:
-            time_elapsed_r = process.arrive_time - current_time
-            while time_elapsed_r > 0 and len(rt_heap) > 0:
-                rt_pid = min(rt_heap)
-                ref_process = process_list[rt_pid.pid]
-                if len(schedule) == 0 or rt_pid.pid != schedule_uid[-1]:
-                    schedule.append(
-                        (process.arrive_time - time_elapsed_r, ref_process.id))
-                    schedule_uid.append(rt_pid.pid)
-                if rt_pid.rt <= time_elapsed_r:
-                    time_elapsed_r -= rt_pid.rt
-                    waiting_time += process.arrive_time - time_elapsed_r - \
-                        ref_process.burst_time - ref_process.arrive_time
-                    heapq.heappop(rt_heap)
-                else:
-                    rt_pid.rt -= time_elapsed_r
-                    time_elapsed_r = 0
+        # execute tasks within [current_time, process.arrive_time)
+        time_elapsed_r = process.arrive_time - current_time
+        while time_elapsed_r > 0 and len(rt_heap) > 0:
+            rt_pid = min(rt_heap)
+            ref_process = process_list[rt_pid.pid]
+            if len(schedule) == 0 or rt_pid.pid != schedule_uid[-1]:
+                schedule.append(
+                    (process.arrive_time - time_elapsed_r, ref_process.id))
+                schedule_uid.append(rt_pid.pid)
+            if rt_pid.rt <= time_elapsed_r:
+                time_elapsed_r -= rt_pid.rt
+                waiting_time += process.arrive_time - time_elapsed_r - \
+                    ref_process.burst_time - ref_process.arrive_time
+                heapq.heappop(rt_heap)
+            else:
+                rt_pid.rt -= time_elapsed_r
+                time_elapsed_r = 0
+        # schedule new task
         heapq.heappush(rt_heap, RtPidPair(process.burst_time, idx))
         current_time = process.arrive_time
 
@@ -224,7 +224,7 @@ def SJF_scheduling(process_list, alpha):
     prev_actual = {}
 
     for idx, process in enumerate(process_list):
-        # schedule task within [current_time, process.arrive_time)
+        # execute tasks within [current_time, process.arrive_time)
         time_elapsed_r = process.arrive_time - current_time
         while time_elapsed_r > 0 and running_process is not None:
             if len(schedule) == 0 or running_process.uid != schedule_uid[-1]:
@@ -242,13 +242,15 @@ def SJF_scheduling(process_list, alpha):
             if running_process is None and len(pr_heap) > 0:
                 uid = heapq.heappop(pr_heap).pid
                 running_process = PCB(process_list[uid], uid)
+        # schedule new task
+        guess = exp_avg(alpha, prev_actual.get(
+                process.id, initial_guess), prev_guess.get(process.id, initial_guess))
+        prev_actual[process.id] = process.burst_time
+        prev_guess[process.id] = guess
         if running_process == None:
             running_process = PCB(process, idx)
         else:
-            heapq.heappush(pr_heap, RtPidPair(exp_avg(alpha, prev_actual.get(
-                process.id, initial_guess), prev_guess.get(process.id, initial_guess)), idx))
-            prev_actual[process.id] = process.burst_time
-            prev_guess[process.id] = initial_guess
+            heapq.heappush(pr_heap, RtPidPair(guess, idx))
         current_time = process.arrive_time
 
     # flush running process and heap
