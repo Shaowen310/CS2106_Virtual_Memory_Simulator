@@ -48,11 +48,13 @@ def FCFS_scheduling(process_list):
 # Output_1 : Schedule list contains pairs of (time_stamp, proccess_id) indicating the time switching to that proccess_id
 # Output_2 : Average Waiting Time
 
-# Assumptions:
-# If a new process arrives during context switch, the stopping process will be appended to the queue first
-
 
 def RR_scheduling(process_list, time_quantum):
+    '''
+    Assumptions:
+
+    If a new process arrives during context switch, the stopping process will be appended to the queue first
+    '''
     # store the (switching time, proccess_id) pair
     schedule = []
     current_time = 0
@@ -148,8 +150,8 @@ class RtPidPair:
 class PCB:
     def __init__(self, process, uid):
         self.process = process
-        self.remain_time = process.burst_time
         self.uid = uid
+        self.remain_time = process.burst_time
 
 
 def SRTF_scheduling(process_list):
