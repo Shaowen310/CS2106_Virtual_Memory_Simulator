@@ -155,6 +155,7 @@ class PCB:
 def SRTF_scheduling(process_list):
     # store the (switching time, proccess_id) pair
     schedule = []
+    schedule_uid = []
     current_time = 0
     # waiting_time = finish_time -burst_time - arrive_time
     waiting_time = 0
@@ -169,9 +170,10 @@ def SRTF_scheduling(process_list):
             while time_elapsed_r > 0 and len(rt_heap) > 0:
                 rt_pid = min(rt_heap)
                 ref_process = process_list[rt_pid.pid]
-                if len(schedule) == 0 or ref_process.id != schedule[-1][1]:
+                if len(schedule) == 0 or rt_pid.pid != schedule_uid[-1]:
                     schedule.append(
                         (process.arrive_time - time_elapsed_r, ref_process.id))
+                    schedule_uid.append(rt_pid.pid)
                 if rt_pid.rt <= time_elapsed_r:
                     time_elapsed_r -= rt_pid.rt
                     waiting_time += process.arrive_time - time_elapsed_r - \
