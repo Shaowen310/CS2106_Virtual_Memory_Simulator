@@ -1,4 +1,3 @@
-OS_basic
-========
+# Process Manager
 
-Operating system basic process and resource manager
+A simulator of process and resource manager. Part of CS2106 assignment.

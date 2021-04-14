@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <stdexcept>
 #include "Runtime.h"
 #include "ProcCtrlBlk.h"
 #include "ProcResMgrExceptions.h"
