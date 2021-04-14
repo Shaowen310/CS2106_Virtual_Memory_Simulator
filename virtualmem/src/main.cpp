@@ -8,6 +8,8 @@
 
 #include "VirtualMemory.h"
 #include "MemExceptions.h"
+#include <algorithm>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -139,6 +141,7 @@ void readRunFile(std::ifstream& runFile, bool hasBuffer, VirtualMemory& vm) {
             std::cout.flush();
         }
     }
+    std::cout << std::endl;
 }
 
 std::string& rtrim(std::string& s) {

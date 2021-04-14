@@ -1,2 +1,5 @@
+nobuffer:
 err 512 522 pf
+
+buffer:
 err m 512 h 522 pf
